@@ -5,6 +5,7 @@ import Login from 'pages/Login';
 import Handover from 'pages/Board/Handover';
 import CoBuying from 'pages/Board/CoBuying';
 import Recommend from 'pages/Board/Recommend';
+import Test from 'pages/Test';
 
 const Router: React.FC = () => (
   <BrowserRouter>
@@ -23,6 +24,9 @@ const Router: React.FC = () => (
       </Route>
       <Route path="/recommend">
         <Recommend />
+      </Route>
+      <Route path="/test">
+        <Test />
       </Route>
       <Redirect to="/" />
     </Switch>
