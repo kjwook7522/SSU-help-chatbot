@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { PRIME_COLOR_CODE, PRIME_HOVER_COLOR_CODE, SUB_COLOR_CODE } from 'common/theme';
 
 interface Props {
   backgroundColor?: string;
@@ -13,7 +14,7 @@ export const StyledNavMenu = styled.div<Props>`
     padding: 1em;
     position: relative;
     display: block;
-    background-color: ${props => props.backgroundColor || '#2e4492'};
+    background-color: ${props => props.backgroundColor || PRIME_COLOR_CODE};
     box-sizing: border-box;
     text-decoration: none;
     font-size: ${props => props.fontSize || '0.875rem'};
@@ -22,8 +23,8 @@ export const StyledNavMenu = styled.div<Props>`
   }
 
   a.active {
-    border-right: 8px solid ${props => props.activeColor || '#ff6c37'};
-    color: ${props => props.activeColor || '#ff6c37'};
+    border-right: 8px solid ${props => props.activeColor || SUB_COLOR_CODE};
+    color: ${props => props.activeColor || SUB_COLOR_CODE};
   }
 
   a::before {
@@ -33,7 +34,7 @@ export const StyledNavMenu = styled.div<Props>`
     position: absolute;
     top: 0;
     left: 0;
-    background-color: ${props => props.hoverColor || '#354ea6'};
+    background-color: ${props => props.hoverColor || PRIME_HOVER_COLOR_CODE};
     transition: 0.3s ease-in;
   }
 

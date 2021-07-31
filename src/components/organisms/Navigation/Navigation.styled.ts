@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { PRIME_COLOR_CODE } from 'common/theme';
 
 interface Props {
   backgroundColor?: string;
@@ -7,7 +8,7 @@ interface Props {
 
 export const StyledNavigation = styled.nav<Props>`
   height: 100%;
-  background-color: ${props => props.backgroundColor || '#2e4492'};
+  background-color: ${props => props.backgroundColor || PRIME_COLOR_CODE};
   color: ${props => props.color || '#fff'};
 
   .nav-icon {
