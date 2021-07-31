@@ -45,3 +45,6 @@ table {
 input {
 	margin: 0;
 }
+input, textarea, keygen, select, button {
+	font: inherit;
+}
