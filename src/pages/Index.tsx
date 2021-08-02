@@ -18,7 +18,7 @@ const Index: React.FC = () => {
             backgroundColor={PRIME_COLOR_CODE}
             hoverColor="#EE6684"
             fontSize="1.25rem"
-            onClick={() => history.push('/handover')}
+            onClick={() => history.push('/login')}
           >
             시작하기
           </SlideButton>
