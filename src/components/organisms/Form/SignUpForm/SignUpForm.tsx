@@ -1,5 +1,7 @@
-import React, { useCallback, useMemo, useEffect, useState } from 'react';
+import React, { useCallback, useMemo, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
+import { useNumber } from 'common/hooks/useNumber';
+import { useFadeAnimation } from 'common/hooks/useFade';
 import { useInput } from 'common/hooks/useInput';
 import Title from 'components/atoms/Title/Title';
 import InputLabelBox from 'components/molecules/InputLabelBox/InputLabelBox';
@@ -10,18 +12,15 @@ import { PRIME_COLOR_CODE, PRIME_HOVER_COLOR_CODE, DISABLE_COLOR_CODE, DISABLE_H
 import { StyledSignUpForm, StyledButtonWrapper } from './SignUpForm.styled';
 
 const SignUpForm: React.FC = () => {
-  const [studentId, handleStudentId] = useInput();
+  const [studentId, handleStudentId] = useNumber();
   const [studnetName, handleStudentName] = useInput();
   const [email, handleEmail] = useInput();
-  const [phone, handlePhone] = useInput();
+  const [phone, handlePhone] = useNumber();
   const [password, handlePassword] = useInput();
   const [passwordConfirm, handlePasswordConfirm] = useInput();
 
-  const [studentIdMessageVisible, setStudentIdMessageVisible] = useState(false);
-  const [passwordConfirmMessageVisible, setPasswordConfirmMessageVisible] = useState(false);
-  const [phoneMessageVisible, setPhoneMessageVisible] = useState(false);
-
   const history = useHistory();
+  const [passwordConfirmMsgRef, fade] = useFadeAnimation();
 
   const userGraduateIcon = useMemo(() => <FaUserGraduate />, []);
   const addressCardIcon = useMemo(() => <FaAddressCard />, []);
@@ -39,33 +38,17 @@ const SignUpForm: React.FC = () => {
   };
 
   useEffect(() => {
-    if (Number.isNaN(Number(studentId))) {
-      setStudentIdMessageVisible(true);
-    } else {
-      setStudentIdMessageVisible(false);
-    }
-  }, [studentId]);
-
-  useEffect(() => {
-    if (Number.isNaN(Number(phone))) {
-      setPhoneMessageVisible(true);
-    } else {
-      setPhoneMessageVisible(false);
-    }
-  }, [phone]);
-
-  useEffect(() => {
     if (password.length === 0 || passwordConfirm.length === 0) {
-      setPasswordConfirmMessageVisible(false);
+      fade(false);
       return;
     }
 
     if (password === passwordConfirm) {
-      setPasswordConfirmMessageVisible(false);
+      fade(false);
     } else {
-      setPasswordConfirmMessageVisible(true);
+      fade(true);
     }
-  }, [password, passwordConfirm]);
+  }, [password, passwordConfirm, fade]);
 
   return (
     <StyledSignUpForm onSubmit={handleSubmit}>
@@ -88,9 +71,6 @@ const SignUpForm: React.FC = () => {
         maxLength={8}
         onChange={handleStudentId}
       />
-      <Message className="error-message" hide={!studentIdMessageVisible} color="#ee415c">
-        숫자만 입력해주세요
-      </Message>
 
       <InputLabelBox
         inputId="student-name"
@@ -141,7 +121,7 @@ const SignUpForm: React.FC = () => {
         maxLength={20}
         onChange={handlePasswordConfirm}
       />
-      <Message className="error-message" hide={!passwordConfirmMessageVisible} color="#ee415c">
+      <Message className="error-message fade-animation-init" _ref={passwordConfirmMsgRef} color="#ee415c">
         비밀번호가 일치하지 않습니다
       </Message>
 
@@ -172,9 +152,6 @@ const SignUpForm: React.FC = () => {
         placeholder="휴대폰 번호를 '-' 없이 입력해주세요"
         onChange={handlePhone}
       />
-      <Message className="error-message" hide={!phoneMessageVisible} color="#ee415c">
-        숫자만 입력해주세요
-      </Message>
 
       <StyledButtonWrapper>
         <BasicButton

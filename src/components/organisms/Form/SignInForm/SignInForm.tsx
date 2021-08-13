@@ -1,8 +1,10 @@
 import React from 'react';
 import { useInput } from 'common/hooks/useInput';
+import { useShakeAnimation } from 'common/hooks/useShake';
 import Title from 'components/atoms/Title/Title';
 import SlideButton from 'components/atoms/Button/SlideButton/SlideButton';
 import AuthInput from 'components/atoms/Input/AuthInput/AuthInput';
+import Message from 'components/atoms/Message/Message';
 import Anchor from 'components/atoms/Anchor/Anchor';
 import { PRIME_COLOR_CODE } from 'common/theme';
 import { StyledSignInForm } from './SignInForm.styled';
@@ -11,10 +13,12 @@ const SignInForm: React.FC = () => {
   const [studentId, handleStudentId] = useInput();
   const [password, handlePassword] = useInput();
 
-  const handleSubmit: React.FormEventHandler = event => {
+  const [messageRef, messageShake] = useShakeAnimation();
+  
+  const handleSubmit: React.FormEventHandler = async event => {
     event.preventDefault();
 
-    alert(`id: ${studentId}\npw: ${password}`);
+    messageShake();
   };
 
   return (
@@ -40,6 +44,10 @@ const SignInForm: React.FC = () => {
         maxLength={20}
         onChange={handlePassword}
       />
+      <Message className="error-message shake-animation-init" _ref={messageRef} color="#ee415c">
+        학번이나 비밀번호가 틀렸습니다
+      </Message>
+
       <SlideButton className="signin-btn" backgroundColor={PRIME_COLOR_CODE} hoverColor="#EE6684">
         로그인
       </SlideButton>
