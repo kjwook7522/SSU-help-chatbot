@@ -6,7 +6,6 @@ interface Props {
   lineHeight?: number;
   color?: string;
   center?: boolean;
-  hide?: boolean;
   children?: React.ReactNode;
   _ref?: ((instance: HTMLParagraphElement | null) => void) | React.RefObject<HTMLParagraphElement> | null;
 }
