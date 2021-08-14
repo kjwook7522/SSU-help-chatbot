@@ -10,7 +10,7 @@ const IntroduceBox: React.FC = () => (
     <Title className="title" color="#fff" fontSize="2rem">
       SSU AI 융합학부
       <br />
-      대학서적 시스템
+      대학서적 추천 시스템
     </Title>
   </StyledIntroduceBox>
 );
