@@ -1,15 +1,25 @@
-import React, { useCallback, useMemo, useEffect } from 'react';
+import React, { useCallback, useMemo, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useNumber } from 'common/hooks/useNumber';
 import { useFadeAnimation } from 'common/hooks/useFade';
 import { useInput } from 'common/hooks/useInput';
+import { fetchSignUp } from 'common/apis/auth';
 import Title from 'components/atoms/Title/Title';
 import InputLabelBox from 'components/molecules/InputLabelBox/InputLabelBox';
 import BasicButton from 'components/atoms/Button/BasicButton/BasicButton';
 import Message from 'components/atoms/Message/Message';
+import Modal from 'components/organisms/Modal/Modal';
 import { FaUserGraduate, FaAddressCard, FaKey, FaEnvelope, FaPhone } from 'react-icons/fa';
 import { PRIME_COLOR_CODE, PRIME_HOVER_COLOR_CODE, DISABLE_COLOR_CODE, DISABLE_HOVER_COLOR_CODE } from 'common/theme';
 import { StyledSignUpForm, StyledButtonWrapper } from './SignUpForm.styled';
+
+interface ModalState {
+  isModalActive: boolean;
+  modalStatus: 'error' | 'warn' | 'confirm';
+  modalMessage: string;
+  onClickConfirm?: (...args: any) => any;
+  onClickCancel?: (...args: any) => any;
+}
 
 const SignUpForm: React.FC = () => {
   const [studentId, handleStudentId] = useNumber();
@@ -19,8 +29,14 @@ const SignUpForm: React.FC = () => {
   const [password, handlePassword] = useInput();
   const [passwordConfirm, handlePasswordConfirm] = useInput();
 
+  const [modalState, setModalState] = useState<ModalState>({
+    isModalActive: false,
+    modalStatus: 'error',
+    modalMessage: '',
+  });
+
   const history = useHistory();
-  const [passwordConfirmMsgRef, fade] = useFadeAnimation();
+  const [passwordConfirmMsgRef, messageFade] = useFadeAnimation();
 
   const userGraduateIcon = useMemo(() => <FaUserGraduate />, []);
   const addressCardIcon = useMemo(() => <FaAddressCard />, []);
@@ -28,30 +44,95 @@ const SignUpForm: React.FC = () => {
   const envelopeIcon = useMemo(() => <FaEnvelope />, []);
   const phoneIcon = useMemo(() => <FaPhone />, []);
 
+  const toggleModalActive = () => setModalState(prev => ({ ...prev, isModalActive: !prev.isModalActive }));
+
+  const isPasswordConfirmValid = () => {
+    if (password === passwordConfirm) {
+      return true;
+    }
+    return false;
+  };
+
+  const isEmailValid = () => {
+    const regExp = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    if (regExp.test(email)) {
+      return true;
+    }
+    return false;
+  };
+
   const goLoginPage = useCallback(() => {
     history.push('/login');
   }, [history]);
 
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = event => {
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async event => {
     event.preventDefault();
-    // write sign up api
+
+    if (!isPasswordConfirmValid()) {
+      setModalState({
+        isModalActive: true,
+        modalStatus: 'error',
+        modalMessage: '비밀번호 확인이 일치하지않습니다',
+        onClickConfirm: toggleModalActive,
+      });
+      return;
+    }
+
+    if (!isEmailValid()) {
+      setModalState({
+        isModalActive: true,
+        modalStatus: 'error',
+        modalMessage: '이메일 형식이 맞지않습니다. 이메일 형식에 맞게 입력해주세요',
+        onClickConfirm: toggleModalActive,
+      });
+      return;
+    }
+
+    const signupResponse = await fetchSignUp({ studentId, name: studnetName, email, phone, password });
+
+    if (signupResponse?.status === 409) {
+      setModalState({
+        isModalActive: true,
+        modalStatus: 'error',
+        modalMessage: '입력하신 학번으로 가입된 아이디가 존재합니다',
+        onClickConfirm: toggleModalActive,
+      });
+      return;
+    }
+
+    setModalState({
+      isModalActive: true,
+      modalStatus: 'confirm',
+      modalMessage: '정상적으로 가입이 완료되었습니다',
+      onClickConfirm: goLoginPage,
+    });
   };
 
   useEffect(() => {
     if (password.length === 0 || passwordConfirm.length === 0) {
-      fade(false);
+      messageFade(false);
       return;
     }
 
     if (password === passwordConfirm) {
-      fade(false);
+      messageFade(false);
     } else {
-      fade(true);
+      messageFade(true);
     }
-  }, [password, passwordConfirm, fade]);
+  }, [password, passwordConfirm, messageFade]);
 
   return (
     <StyledSignUpForm onSubmit={handleSubmit}>
+      {modalState.isModalActive && (
+        <Modal
+          type={modalState.modalStatus}
+          onClickConfirm={modalState.onClickConfirm}
+          onClickOutside={modalState.onClickConfirm}
+        >
+          {modalState.modalMessage}
+        </Modal>
+      )}
+
       <Title className="signup-title" color={PRIME_COLOR_CODE} fontSize="1.75rem" center>
         회원가입
       </Title>
