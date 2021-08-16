@@ -100,12 +100,14 @@ const SignUpForm: React.FC = () => {
       return;
     }
 
-    setModalState({
-      isModalActive: true,
-      modalStatus: 'confirm',
-      modalMessage: '정상적으로 가입이 완료되었습니다',
-      onClickConfirm: goLoginPage,
-    });
+    if (signupResponse?.status === 200) {
+      setModalState({
+        isModalActive: true,
+        modalStatus: 'confirm',
+        modalMessage: '정상적으로 가입이 완료되었습니다',
+        onClickConfirm: goLoginPage,
+      });
+    }
   };
 
   useEffect(() => {
