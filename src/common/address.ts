@@ -1,1 +1,1 @@
-export const API_SERVER_ADDRESS = 'http://api.ssuaibook.site/api/v1';
+export const API_SERVER_ADDRESS = 'https://api.ssuaibook.site/api/v1';
