@@ -8,33 +8,44 @@ import CoBuying from 'pages/Board/CoBuying';
 import Recommend from 'pages/Board/Recommend';
 import Test from 'pages/Test';
 
-const Router: React.FC = () => (
-  <BrowserRouter>
-    <Switch>
-      <Route exact path="/">
-        <Index />
-      </Route>
-      <Route path="/login">
-        <Login />
-      </Route>
-      <Route path="/join">
-        <Join />
-      </Route>
-      <Route path="/handover">
-        <Handover />
-      </Route>
-      <Route path="/cobuying">
-        <CoBuying />
-      </Route>
-      <Route path="/recommend">
-        <Recommend />
-      </Route>
-      <Route path="/test">
-        <Test />
-      </Route>
-      <Redirect to="/" />
-    </Switch>
-  </BrowserRouter>
+interface Props {
+  isLoggedIn: boolean;
+}
+
+const Router: React.FC<Props> = ({ isLoggedIn }) => (
+  <BrowserRouter>{isLoggedIn ? <PrivateRouter /> : <PublicRouter />}</BrowserRouter>
+);
+
+const PublicRouter: React.FC = () => (
+  <Switch>
+    <Route exact path="/">
+      <Index />
+    </Route>
+    <Route path="/login">
+      <Login />
+    </Route>
+    <Route path="/join">
+      <Join />
+    </Route>
+    <Route path="/test">
+      <Test />
+    </Route>
+    <Redirect to="/" />
+  </Switch>
+);
+
+const PrivateRouter: React.FC = () => (
+  <Switch>
+    <Route path="/handover">
+      <Handover />
+    </Route>
+    <Route path="/cobuying">
+      <CoBuying />
+    </Route>
+    <Route path="/recommend">
+      <Recommend />
+    </Route>
+  </Switch>
 );
 
 export default Router;
