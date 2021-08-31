@@ -15,3 +15,7 @@ export const getToken = (): string | null => {
 export const setToken = (newToken: string): void => {
   localStorage.setItem('token', newToken);
 };
+
+export const removeToken = (): void => {
+  localStorage.removeItem('token');
+};
