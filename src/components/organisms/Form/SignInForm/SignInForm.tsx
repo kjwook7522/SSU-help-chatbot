@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useInput } from 'common/hooks/useInput';
 import { useShakeAnimation } from 'common/hooks/useShake';
@@ -9,6 +9,7 @@ import SlideButton from 'components/atoms/Button/SlideButton/SlideButton';
 import AuthInput from 'components/atoms/Input/AuthInput/AuthInput';
 import Message from 'components/atoms/Message/Message';
 import Anchor from 'components/atoms/Anchor/Anchor';
+import Loading from 'components/atoms/Loading/Loading';
 import { setToken } from 'utils/localstorage';
 import { logIn } from 'actions/auth';
 import { PRIME_COLOR_CODE } from 'common/theme';
@@ -19,6 +20,7 @@ import { StyledSignInForm } from './SignInForm.styled';
 const SignInForm: React.FC = () => {
   const [studentId, handleStudentId] = useInput();
   const [password, handlePassword] = useInput();
+  const [signInLoading, setSignInLoading] = useState(false);
 
   const dispatch = useAppDispatch();
   const history = useHistory();
@@ -27,11 +29,13 @@ const SignInForm: React.FC = () => {
 
   const handleSubmit: React.FormEventHandler = async event => {
     event.preventDefault();
+    setSignInLoading(true);
 
     const signinResponse = await fetchSignIn({ studentId, password });
 
     if (signinResponse?.status === 404) {
       messageShake();
+      setSignInLoading(false);
       return;
     }
 
@@ -64,6 +68,7 @@ const SignInForm: React.FC = () => {
         className="input"
         type="student-id"
         placeholder="학번을 입력하세요"
+        required
         maxLength={8}
         onChange={handleStudentId}
       />
@@ -73,6 +78,7 @@ const SignInForm: React.FC = () => {
         className="input"
         type="password"
         placeholder="비밀번호를 입력하세요"
+        required
         maxLength={20}
         onChange={handlePassword}
       />
@@ -81,7 +87,7 @@ const SignInForm: React.FC = () => {
       </Message>
 
       <SlideButton className="signin-btn" backgroundColor={PRIME_COLOR_CODE} hoverColor="#EE6684">
-        로그인
+        {signInLoading ? <Loading size="13px" /> : '로그인'}
       </SlideButton>
 
       <Anchor to="/join" color="#787878">
