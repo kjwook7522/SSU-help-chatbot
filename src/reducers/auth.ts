@@ -1,8 +1,9 @@
 import { LOG_IN, LOG_OUT } from 'actions/auth';
+import { getIsLoggedIn } from 'utils/localstorage';
 
 /* global AuthState AuthAction */
 
-const initState: AuthState = { isLogined: false };
+const initState: AuthState = { isLogined: getIsLoggedIn() };
 
 export const authReducer = (state = initState, action: AuthAction): AuthState => {
   switch (action.type) {

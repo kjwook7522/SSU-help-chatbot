@@ -13,6 +13,17 @@ declare interface SignUpResponse {
   user?: User;
 }
 
+declare interface SignInBody {
+  studentId: string;
+  password: string;
+}
+
+declare interface SignInResponse {
+  detail?: string;
+  token?: string;
+  user?: User;
+}
+
 declare interface NoDataResponse {
   detail: string;
 }

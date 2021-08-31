@@ -1,11 +1,11 @@
+import { useAppSelector } from 'common/hooks/userRedux';
 import React from 'react';
 import Router from 'Router';
-import { getIsLoggedIn } from 'utils/localstorage';
 
 const App: React.FC = () => {
-  const isLoggedIn = getIsLoggedIn();
+  const authStore = useAppSelector(state => state.authReducer);
 
-  return <Router isLoggedIn={isLoggedIn} />;
+  return <Router isLoggedIn={authStore.isLogined} />;
 };
 
 export default App;
