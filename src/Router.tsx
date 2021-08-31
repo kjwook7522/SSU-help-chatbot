@@ -3,9 +3,7 @@ import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import Index from 'pages/Index';
 import Login from 'pages/Login';
 import Join from 'pages/Join';
-import Handover from 'pages/Board/Handover';
-import CoBuying from 'pages/Board/CoBuying';
-import Recommend from 'pages/Board/Recommend';
+import HomeSearch from 'pages/HomeSearch';
 import Test from 'pages/Test';
 
 interface Props {
@@ -36,15 +34,10 @@ const PublicRouter: React.FC = () => (
 
 const PrivateRouter: React.FC = () => (
   <Switch>
-    <Route path="/handover">
-      <Handover />
+    <Route exact path="/">
+      <HomeSearch />
     </Route>
-    <Route path="/cobuying">
-      <CoBuying />
-    </Route>
-    <Route path="/recommend">
-      <Recommend />
-    </Route>
+    <Redirect to="/" />
   </Switch>
 );
 
