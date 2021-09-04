@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 import SearchInput from 'components/molecules/SearchInput/SearchInput';
 import { StyledBookSearchForm } from './BookSearchForm.styled';
 
-const BookSearchFrom: React.FC = () => {
+const BookSearchForm: React.FC = () => {
   const [search, handleSearch] = useInput();
 
   const history = useHistory();
@@ -22,4 +22,4 @@ const BookSearchFrom: React.FC = () => {
   );
 };
 
-export default BookSearchFrom;
+export default BookSearchForm;

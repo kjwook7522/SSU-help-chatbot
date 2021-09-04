@@ -5,7 +5,7 @@ import { removeToken } from 'utils/localstorage';
 import IndexBackground from 'components/organisms/Background/IndexBackground/IndexBackground';
 import CenterTemplate from 'templates/CenterTemplate/CenterTemplate';
 import BasicButton from 'components/atoms/Button/BasicButton/BasicButton';
-import BookSearchFrom from 'components/organisms/Form/BookSearchForm/BookSearchForm';
+import BookSearchForm from 'components/organisms/Form/BookSearchForm/BookSearchForm';
 
 import styled from 'styled-components';
 
@@ -22,7 +22,7 @@ const HomeSearch: React.FC = () => {
       <CenterTemplate
         centerSection={
           <>
-            <BookSearchFrom />
+            <BookSearchForm />
             <StyledLogoutButton>
               <BasicButton onClick={handleLogout}>임시 로그아웃</BasicButton>
             </StyledLogoutButton>
