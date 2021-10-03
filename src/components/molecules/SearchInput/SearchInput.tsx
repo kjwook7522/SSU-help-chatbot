@@ -3,6 +3,7 @@ import { FaSearch } from 'react-icons/fa';
 import {
   StyledSearchInput,
   StyledSelector,
+  StyledOptionWrapper,
   StyledOptions,
   StyledOptionItem,
   StyledInput,
@@ -13,14 +14,17 @@ interface Props extends React.InputHTMLAttributes<HTMLInputElement> {
   filterOptions: Array<string>;
 }
 
+let optionHeight = '0';
+
 const SearchInput: React.FC<Props> = ({ filterOptions, ...props }) => {
   const [selectValue, setSelectValue] = useState(filterOptions[0]);
-  const [isActive, setIsActive] = useState(false);
+  const [filterIsActive, setFilterIsActive] = useState(false);
 
-  const optionRef = useRef<HTMLUListElement>(null);
+  const optionParentRef = useRef<HTMLDivElement>(null);
+  const optionChildRef = useRef<HTMLUListElement>(null);
 
   const toggleSelect = (): void => {
-    setIsActive(prev => !prev);
+    setFilterIsActive(prev => !prev);
   };
 
   const handleOption = (value: string): void => {
@@ -29,25 +33,36 @@ const SearchInput: React.FC<Props> = ({ filterOptions, ...props }) => {
   };
 
   useEffect(() => {
-    if (isActive) {
-      optionRef.current?.classList.add('active');
+    if (!optionChildRef.current) return;
+    
+    optionHeight = optionChildRef.current.clientHeight.toString();
+  }, []);
+
+  useEffect(() => {
+    if (!optionParentRef.current) return;
+
+    if (filterIsActive) {
+      optionParentRef.current.style.height = `${optionHeight}px`;
+    } else {
+      optionParentRef.current.style.height = '0';
     }
-  }, [isActive]);
+  }, [filterIsActive]);
 
   return (
     <StyledSearchInput>
       <StyledSelector onClick={toggleSelect}>
         {selectValue} <span className="down-arrow">&#9660;</span>
       </StyledSelector>
-      {isActive && (
-        <StyledOptions ref={optionRef}>
+
+      <StyledOptionWrapper ref={optionParentRef}>
+        <StyledOptions ref={optionChildRef}>
           {filterOptions?.map(name => (
             <StyledOptionItem key={name} onClick={() => handleOption(name)}>
               {name}
             </StyledOptionItem>
           ))}
         </StyledOptions>
-      )}
+      </StyledOptionWrapper>
 
       <StyledInput {...props} />
 

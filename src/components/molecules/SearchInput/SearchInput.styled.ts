@@ -24,25 +24,25 @@ export const StyledSelector = styled.div`
   }
 `;
 
-export const StyledOptions = styled.ul`
+export const StyledOptionWrapper = styled.div`
   width: 100px;
-  max-height: 0;
+  max-height: 100px;
   position: absolute;
   left: 0;
   top: 70px;
   border-radius: 10px;
-  background-color: #f6f6f6;
   box-shadow: rgba(0, 0, 0, 0.07) 0px 1px 1px, rgba(0, 0, 0, 0.07) 0px 2px 2px, rgba(0, 0, 0, 0.07) 0px 4px 4px,
     rgba(0, 0, 0, 0.07) 0px 8px 8px, rgba(0, 0, 0, 0.07) 0px 16px 16px;
   overflow: hidden;
   overflow-y: scroll;
-  color: #6d7198;
-  z-index: 10;
+  transform: translateZ(0);
   transition: 0.3s;
+  z-index: 10;
+`;
 
-  &.active {
-    max-height: 100px;
-  }
+export const StyledOptions = styled.ul`
+  background-color: #f6f6f6;
+  color: #6d7198;
 `;
 
 export const StyledOptionItem = styled.li`
@@ -56,7 +56,6 @@ export const StyledOptionItem = styled.li`
     background-color: #eee;
   }
 `;
-
 
 export const StyledInput = styled.input`
   width: 100%;
