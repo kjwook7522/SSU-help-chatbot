@@ -14,3 +14,8 @@ declare interface BookInfromation {
   success: boolean;
   kor: boolean;
 }
+
+declare interface BookQuery {
+  search?: string;
+  barcode?: string;
+}

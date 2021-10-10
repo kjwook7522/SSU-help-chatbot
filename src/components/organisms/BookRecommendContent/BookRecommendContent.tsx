@@ -21,8 +21,8 @@ const BookRecommendContent: React.FC<Props> = ({ books }) => (
   <StyledBookRecommendContent>
     <StyledHeader>당신을 위한 AI 책 추천</StyledHeader>
     <Slider {...settings}>
-      {books.map(({ title, image, author, publisher }) => (
-        <StyledSliderItemWrapper>
+      {books.map(({ title, image, author, publisher, barcode }) => (
+        <StyledSliderItemWrapper key={barcode}>
           <SliderItem bookTitle={title} bookThumbnail={image} author={author} publisher={publisher} />
         </StyledSliderItemWrapper>
       ))}

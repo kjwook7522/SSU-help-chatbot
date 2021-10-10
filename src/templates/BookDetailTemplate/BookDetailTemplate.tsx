@@ -11,7 +11,7 @@ import {
 } from './BookDetailTemplate.styled';
 
 interface Props {
-  searchValue: string | string[] | null;
+  searchValue?: string;
   detailSection: React.ReactNode;
   recommendSection: React.ReactNode;
 }

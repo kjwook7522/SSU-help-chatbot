@@ -7,9 +7,13 @@ import BookDetailContent from 'components/organisms/BookDetailContent/BookDetail
 import BookRecommendContent from 'components/organisms/BookRecommendContent/BookRecommendContent';
 import { TEMP_BOOK_DATA } from 'common/bookdata';
 
+/* global BookQuery */
+
 const BookDetail: React.FC = () => {
   const location = useLocation();
-  const queryData = query.parse(location.search);
+  const queryData: BookQuery = query.parse(location.search);
+  
+  // useEffect로 query data가 serach인지 barcode인지에 따라 api 호출을 각각한다
 
   return (
     <>
