@@ -11,6 +11,7 @@ export const StyledBookDetailContent = styled.div`
   width: 750px;
   margin: 4rem 0;
   padding: 2rem;
+  position: relative;
   border-radius: 10px;
   background-color: #fff;
   box-sizing: border-box;
@@ -32,6 +33,18 @@ export const StyledHeader = styled.header`
   h1 {
     font-weight: 700;
     font-size: 1.25rem;
+  }
+`;
+
+export const StyledBackButtonWrapper = styled.div`
+  position: absolute;
+  top: 25px;
+  right: 25px;
+
+  svg {
+    font-size: 1.5rem;
+    color: #bbb;
+    cursor: pointer;
   }
 `;
 
