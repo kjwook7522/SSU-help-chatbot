@@ -1,5 +1,4 @@
 import React from 'react';
-import TempBookImage from 'assets/image/test_book_image.jpg';
 import { moneyFormatter } from 'utils/dataformat';
 import {
   StyledBookDetailContent,
@@ -13,18 +12,20 @@ import {
 } from './BookDetailContent.styled';
 
 interface Props {
-  bookTitle: string;
-  author: string;
-  publisher: string;
+  bookTitle?: string;
+  author?: string;
+  imageSrc?: string;
+  publisher?: string;
   publishDate?: string;
   bookRank?: string;
-  price: number;
+  price?: string;
   bookRating?: number;
 }
 
 const BookDetailContent: React.FC<Props> = ({
   bookTitle,
   author,
+  imageSrc,
   publisher,
   publishDate,
   bookRank,
@@ -33,7 +34,7 @@ const BookDetailContent: React.FC<Props> = ({
 }) => (
   <StyledBookDetailContent>
     <StyledBookImageWrapper>
-      <StyledBookImage src={TempBookImage} />
+      <StyledBookImage src={imageSrc} />
     </StyledBookImageWrapper>
 
     <StyledBookDetailInfo>
@@ -61,10 +62,10 @@ const BookDetailContent: React.FC<Props> = ({
 
       <StyledBookDetailInfoItem>
         <StyledBookDetailInfoCategory>평점</StyledBookDetailInfoCategory>
-        <span>{bookRating}</span>
+        <span>{bookRating?.toFixed(1)}</span>
       </StyledBookDetailInfoItem>
 
-      <StyledBookDetailInfoPrice>₩ {moneyFormatter(price)}</StyledBookDetailInfoPrice>
+      <StyledBookDetailInfoPrice>₩ {price || 0}</StyledBookDetailInfoPrice>
     </StyledBookDetailInfo>
   </StyledBookDetailContent>
 );

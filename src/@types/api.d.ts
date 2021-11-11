@@ -1,4 +1,4 @@
-/* global User */
+/* global User, BookInfromation */
 
 declare interface SignUpBody {
   studentId: string;
@@ -27,3 +27,21 @@ declare interface SignInResponse {
 declare interface NoDataResponse {
   detail: string;
 }
+
+declare interface SearchBookBody {
+  text: string;
+  option: string;
+}
+
+// declare interface SearchBookResponse {
+
+// }
+
+declare interface RecommendBookBody {
+  text: string;
+  option: string;
+}
+
+// declare interface RecommendBookResponse {
+  
+// }
