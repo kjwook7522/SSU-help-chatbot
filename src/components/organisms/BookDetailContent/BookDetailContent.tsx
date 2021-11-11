@@ -1,5 +1,4 @@
 import React from 'react';
-import { moneyFormatter } from 'utils/dataformat';
 import {
   StyledBookDetailContent,
   StyledBookImageWrapper,

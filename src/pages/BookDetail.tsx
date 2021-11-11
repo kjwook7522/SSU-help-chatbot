@@ -6,7 +6,6 @@ import BookDetailTemplate from 'templates/BookDetailTemplate/BookDetailTemplate'
 import BookDetailContent from 'components/organisms/BookDetailContent/BookDetailContent';
 import BookRecommendContent from 'components/organisms/BookRecommendContent/BookRecommendContent';
 import { fetchBarcodeBook, fetchRecommendBooks, fetchSearchBook } from 'common/apis/book';
-import { TEMP_BOOK_DATA } from 'common/bookdata';
 
 /* global BookQuery, SearchBookBody, BookInfromation */
 
@@ -27,7 +26,6 @@ const BookDetail: React.FC = () => {
     if (!searchBookResponse) return;
 
     setBookInformation(searchBookResponse.data);
-    console.log(searchBookResponse.data);
 
     const recommendBookResponse = await fetchRecommendBooks(body);
     if (!recommendBookResponse) return;
