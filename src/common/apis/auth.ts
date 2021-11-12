@@ -5,7 +5,7 @@ import { API_SERVER_ADDRESS } from 'common/address';
 
 export const fetchSignUp = async (body: SignUpBody): Promise<AxiosResponse<SignUpResponse> | undefined> => {
   try {
-    const response = await axios.post<SignUpResponse>(`${API_SERVER_ADDRESS}/signup`, body);
+    const response = await axios.post<SignUpResponse>(`${API_SERVER_ADDRESS}/api/signup`, body);
     return response;
   } catch (error) {
     const { response } = error as AxiosError<SignUpResponse>;
@@ -19,7 +19,7 @@ export const fetchSignUp = async (body: SignUpBody): Promise<AxiosResponse<SignU
 
 export const fetchSignIn = async (body: SignInBody): Promise<AxiosResponse<SignInResponse> | undefined> => {
   try {
-    const response = await axios.post<SignInResponse>(`${API_SERVER_ADDRESS}/signin`, body);
+    const response = await axios.post<SignInResponse>(`${API_SERVER_ADDRESS}/api/signin`, body);
     return response;
   } catch (error) {
     const { response } = error as AxiosError<SignInResponse>;
